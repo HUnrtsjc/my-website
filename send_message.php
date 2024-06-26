@@ -1,9 +1,9 @@
 <?php
 // แทนค่าด้วย Channel Access Token ของคุณ
-$access_token = 'YOUR_CHANNEL_ACCESS_TOKEN';
+$access_token = 'c3771167bf7edbda136c88da729f017a';
 
 // แทนค่าด้วย User ID ของบัญชี LINE ส่วนตัวของคุณ
-$user_id = 'YOUR_LINE_USER_ID';
+$user_id = 'n0932820048t';
 
 // รับข้อมูลจากฟอร์ม
 $message = $_POST['message'];
