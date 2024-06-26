@@ -1,6 +1,6 @@
 <?php
 // แทนค่าด้วย Channel Access Token ของคุณ
-$access_token = 'c3771167bf7edbda136c88da729f017a';
+$access_token = 'Bearer c3771167bf7edbda136c88da729f017a';
 
 // แทนค่าด้วย User ID ของบัญชี LINE ส่วนตัวของคุณ
 $user_id = 'n0932820048t';
