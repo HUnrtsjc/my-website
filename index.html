@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Submission</title>
+</head>
+<body>
+    <h2>กรอกข้อมูล</h2>
+    <form id="myForm">
+        <label for="name">ชื่อ:</label>
+        <input type="text" id="name" name="name"><br><br>
+        
+        <label for="email">อีเมล:</label>
+        <input type="email" id="email" name="email"><br><br>
+        
+        <label for="message">ข้อความ:</label><br>
+        <textarea id="message" name="message" rows="4" cols="50"></textarea><br><br>
+        
+        <button type="submit">ส่งข้อมูล</button>
+    </form>
+
+    <script>
+        // จัดการเมื่อฟอร์มถูกส่ง
+        document.getElementById("myForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // ยกเลิกการส่งฟอร์ม
+
+            // ดึงค่าจากฟอร์ม
+            var name = document.getElementById("name").value;
+            var email = document.getElementById("email").value;
+            var message = document.getElementById("message").value;
+
+            // บันทึกข้อมูลลงใน Local Storage
+            var data = {
+                name: name,
+                email: email,
+                message: message
+            };
+            localStorage.setItem("formData", JSON.stringify(data));
+
+            // แสดงข้อความยืนยัน
+            alert("บันทึกข้อมูลเรียบร้อยแล้ว!");
+
+            // ล้างฟอร์มหลังจากบันทึก
+            document.getElementById("myForm").reset();
+        });
+    </script>
+</body>
+</html
