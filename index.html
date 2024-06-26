@@ -3,16 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form Submission</title>
+    <title>Form Submission to LINE</title>
 </head>
 <body>
     <h2>กรอกข้อมูล</h2>
     <form id="myForm">
         <label for="name">ชื่อ:</label>
         <input type="text" id="name" name="name"><br><br>
-        
-        <label for="email">อีเมล:</label>
-        <input type="email" id="email" name="email"><br><br>
         
         <label for="message">ข้อความ:</label><br>
         <textarea id="message" name="message" rows="4" cols="50"></textarea><br><br>
@@ -21,29 +18,54 @@
     </form>
 
     <script>
-        // จัดการเมื่อฟอร์มถูกส่ง
         document.getElementById("myForm").addEventListener("submit", function(event) {
             event.preventDefault(); // ยกเลิกการส่งฟอร์ม
 
             // ดึงค่าจากฟอร์ม
             var name = document.getElementById("name").value;
-            var email = document.getElementById("email").value;
             var message = document.getElementById("message").value;
 
-            // บันทึกข้อมูลลงใน Local Storage
-            var data = {
-                name: name,
-                email: email,
-                message: message
-            };
-            localStorage.setItem("formData", JSON.stringify(data));
+            // เรียกใช้ฟังก์ชันสำหรับการส่งข้อมูลไปยัง LINE
+            sendMessageToLINE(name, message);
 
             // แสดงข้อความยืนยัน
-            alert("บันทึกข้อมูลเรียบร้อยแล้ว!");
+            alert("ข้อมูลของคุณถูกส่งไปยัง LINE แล้ว!");
 
             // ล้างฟอร์มหลังจากบันทึก
             document.getElementById("myForm").reset();
         });
+
+        function sendMessageToLINE(name, message) {
+            // ตั้งค่า URL สำหรับ API ของ LINE Messaging API
+            var url = 'https://api.line.me/v2/bot/message/push';
+
+            // ตั้งค่า Header สำหรับการเข้าถึง API
+            var headers = {
+                'Content-Type': 'application/json',
+                'Authorization': '1K4azY4pLuhtKi1byqH8E0JZ1XMMVNT4WIgIscmWId2v+ppjSVCri1c4DM9ukJuc6eZk7C66rqZpivVItGjKwbwOG4byaVOFz1fEulW5HS16jqC7Vyygg8HFnGLj17xnzq4O9h8DQ3T7MELQelszoAdB 04t89/1O/w1cDnyilFU=' // แทนค่าด้วย Channel Access Token ของคุณ
+            };
+
+            // ตั้งค่าข้อมูลที่จะส่งไปยัง LINE
+            var data = JSON.stringify({
+                to: 'USER_ID', // แทนค่าด้วย User ID ของผู้ใช้ LINE ที่จะส่งข้อความไปหา
+                messages: [
+                    {
+                        type: 'text',
+                        text: 'ข้อความจาก ' + name + ': ' + message
+                    }
+                ]
+            });
+
+            // ส่งข้อมูลไปยัง LINE ผ่านการใช้งาน fetch API
+            fetch(url, {
+                method: 'POST',
+                headers: headers,
+                body: data
+            })
+            .then(response => response.json())
+            .then(data => console.log('Message sent:', data))
+            .catch(error => console.error('Error sending message:', error));
+        }
     </script>
 </body>
-</html
+</html>
